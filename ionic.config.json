@@ -1,0 +1,7 @@
+{
+  "name": "NftsIonicProyect",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
