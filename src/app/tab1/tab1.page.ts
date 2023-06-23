@@ -44,16 +44,20 @@ export class Tab1Page implements OnInit {
   
   }
 
-  search(event: any){ 
-    this.nftsService.getNftDetail(event.detail.value).subscribe((searchResponse) => {
-      this.navCtrl.navigateForward('/tabs/tab2', {
-        queryParams: {
-          detail: JSON.stringify(searchResponse)
-        }
-      });
-    }, (error)  => {
-      this.presentAlert();
-    })
+  search(event: any) {
+    const searchTerm = event.detail.value.toLowerCase(); // Convertir la búsqueda a minúsculas
+    
+    this.nftsService.getNftDetail(searchTerm).subscribe((searchResponse) => {
+        this.navCtrl.navigateForward('/tabs/tab2', {
+          queryParams: {
+            detail: JSON.stringify(searchResponse)
+          }
+        });
+      },
+      (error) => {
+        this.presentAlert();
+      }
+    );
   }
 
   /* search(event: any) {
