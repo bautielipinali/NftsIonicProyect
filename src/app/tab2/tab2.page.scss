@@ -1,0 +1,10 @@
+.no-border-header {
+  --border-width: 0;
+  --border-style: none;
+  --ion-background-color: transparent;
+  --box-shadow: none;
+}
+
+ion-item {
+  --padding-start: 0;
+}

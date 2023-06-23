@@ -1,18 +1,31 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      NFT´S Home
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-list  [inset]="true">
-    <ion-item *ngFor="let coin of arrayCoins.slice(0, 10)">
-      <ion-label>Id: {{ coin.id }}</ion-label>
-      <ion-label>Simbolo: {{ coin.symbol }}</ion-label>
-      <ion-label>Nombre: {{ coin.name }}</ion-label>
-    </ion-item>
+  <ion-col size="0.5">
+    <ion-searchbar (ionChange)="search($event)" placeholder="Search" class="search" clear-icon="trash-bin"></ion-searchbar>
+  </ion-col>
+  <ion-list  [inset]="true" *ngFor="let nft of arrayNfts">
+    
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{nft.name}}</ion-card-title>
+          <ion-card-subtitle>{{nft.asset_platform_id}}</ion-card-subtitle>
+        </ion-card-header>
+      
+        <ion-card-content>
+          {{nft.symbol}}
+        </ion-card-content>
+        <ion-card-content>
+          <ion-button fill="outline" color="success" (click)="nftDetail(nft.id)">Ver Detalles</ion-button>
+        </ion-card-content>
+      </ion-card>
+    
   </ion-list>
 </ion-content>
 

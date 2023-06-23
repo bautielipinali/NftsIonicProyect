@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NftsService } from '../services/nfts.service';
-import { Coin } from '../interfaces/interfaces';
+import { Nfts, NftDetail } from '../interfaces/interfaces';
 import { NgModule } from '@angular/core';
-
-
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -12,14 +11,34 @@ import { NgModule } from '@angular/core';
 })
 export class Tab1Page implements OnInit {
 
-  arrayCoins: Coin[] = [];
-  constructor(private coinsService:NftsService) {}
+  arrayNfts: Nfts[] = [];
+  constructor(private nftsService:NftsService, private navCtrl: NavController) {}
 
   ngOnInit() {
-    this.coinsService.getCoins().subscribe(coinsResponse =>{
-      console.log(coinsResponse)
-      this.arrayCoins=coinsResponse
+    this.nftsService.getNfts().subscribe(nftsResponse =>{
+      console.log(nftsResponse)
+      this.arrayNfts=nftsResponse.slice(0, 10);
     })
   }
 
+  nftDetail(id: string) {
+    this.nftsService.getNftDetail(id).subscribe(detailResponse => {
+      this.navCtrl.navigateForward('/tabs/tab2', {
+        queryParams: {
+          detail: JSON.stringify(detailResponse)
+        }
+      });
+    });
+  }
+
+  search(event:any) {
+    this.nftsService.getNftDetail(event.detail.value).subscribe(searchResponse => {
+      this.navCtrl.navigateForward('/tabs/tab2', {
+        queryParams: {
+          detail: JSON.stringify(searchResponse)
+        }
+      });
+    });
+    // consumir api de busqueda como se hace en tab1
+  }
 }
