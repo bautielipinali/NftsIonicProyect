@@ -19,7 +19,7 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
     this.nftsService.getNfts().subscribe(nftsResponse =>{
       console.log(nftsResponse)
-      this.arrayNfts=nftsResponse.slice(0, 10);
+      this.arrayNfts=nftsResponse.slice(0, 15);
     })
   }
 
