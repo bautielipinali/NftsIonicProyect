@@ -14,3 +14,20 @@ ion-card-subtitle {
 ion-searchbar.search {
   --border-radius: 10px;
 }
+
+.ion-item-narrow {
+  max-width: 800px; /* Puedes ajustar este valor según tus necesidades */
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 850px) {
+  ion-item.ion-item-narrow {
+    max-width: 400px; /* Puedes ajustar este valor según tus necesidades */
+  }
+}
+
+@media screen and (max-width: 600px) {
+  ion-item.ion-item-narrow {
+    max-width: 300px; /* Puedes ajustar este valor según tus necesidades */
+  }
+}

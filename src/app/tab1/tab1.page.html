@@ -10,39 +10,30 @@
   <ion-col size="0.5">
     <ion-searchbar (ionChange)="search($event)" placeholder="Search" class="search" clear-icon="trash-bin"></ion-searchbar>
   </ion-col>
-  <ion-list  [inset]="true" *ngFor="let nft of arrayNfts">
-    
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{nft.name}}</ion-card-title>
-          <ion-card-subtitle>{{nft.asset_platform_id}}</ion-card-subtitle>
-        </ion-card-header>
-      
-        <ion-card-content>
-          {{nft.symbol}}
-        </ion-card-content>
-        <ion-card-content>
-          <ion-button fill="outline" color="success" (click)="nftDetail(nft.id)">Ver Detalles</ion-button>
-        </ion-card-content>
-      </ion-card>
-    
+
+  <!-- filtro -->
+  <ion-item class="ion-item-narrow">
+    <ion-select label="Filter:"  (ionChange)="filterNfts($event)">
+      <ion-select-option value="ethereum">Ethereum</ion-select-option>
+      <ion-select-option value="polygon-pos">Polygon-pos</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-list [inset]="true">
+    <ion-card *ngFor="let nft of (showFilter ? arrayFilterNfts : arrayNfts)">
+      <ion-card-header>
+        <ion-card-title>{{nft.name}}</ion-card-title>
+        <ion-card-subtitle>{{nft.asset_platform_id}}</ion-card-subtitle>
+      </ion-card-header>
+        
+      <ion-card-content>
+        {{nft.symbol}}
+      </ion-card-content>
+      <ion-card-content>
+        <ion-button fill="outline" color="success" (click)="nftDetail(nft.id)">VIEW DETAILS</ion-button>
+      </ion-card-content>
+    </ion-card>
   </ion-list>
+  
 </ion-content>
 
-<!-- <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-list *ngfor="let coin of arrayCoins">
-    <ion-item>
-      <ion-label>{{coin.name}}</ion-label>
-    </ion-item>
-  </ion-list>
-
-  <app-explore-container name="Tab 1 page"></app-explore-container> -->
- 
-
-<!-- </ion-content> -->

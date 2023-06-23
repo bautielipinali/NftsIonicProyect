@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NftsService } from '../services/nfts.service';
 import { Nfts, NftDetail } from '../interfaces/interfaces';
-import { NgModule } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -10,9 +10,11 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
-
+  
   arrayNfts: Nfts[] = [];
-  constructor(private nftsService:NftsService, private navCtrl: NavController) {}
+  arrayFilterNfts: Nfts[] = [];
+  showFilter: boolean = false;
+  constructor(private nftsService:NftsService, private navCtrl: NavController, private alertCtrl:AlertController) {}
 
   ngOnInit() {
     this.nftsService.getNfts().subscribe(nftsResponse =>{
@@ -31,14 +33,49 @@ export class Tab1Page implements OnInit {
     });
   }
 
-  search(event:any) {
-    this.nftsService.getNftDetail(event.detail.value).subscribe(searchResponse => {
+  async presentAlert() {    
+    const alert = await this.alertCtrl.create({
+      header: 'ERROR 404',
+      subHeader:'Not found',
+      message: 'The NFT could not be found, please try again.',
+      buttons: ['OK']
+    });
+    await alert.present();
+  
+  }
+
+  search(event: any){ 
+    this.nftsService.getNftDetail(event.detail.value).subscribe((searchResponse) => {
       this.navCtrl.navigateForward('/tabs/tab2', {
         queryParams: {
           detail: JSON.stringify(searchResponse)
         }
       });
+    }, (error)  => {
+      this.presentAlert();
+    })
+  }
+
+  /* search(event: any) {
+    this.nftsService.getNftDetail(event.detail.value).subscribe(searchResponse => {
+      if (Array.isArray(searchResponse) && searchResponse.length === 0) {
+        this.presentAlert();
+      } else {
+        this.navCtrl.navigateForward('/tabs/tab2', {
+          queryParams: {
+            detail: JSON.stringify(searchResponse)
+          }
+        });
+      }
     });
-    // consumir api de busqueda como se hace en tab1
+  } */
+  
+
+  filterNfts(event:any) {
+    const selectedValue = event.detail.value;
+    this.arrayFilterNfts = this.arrayNfts.filter(n => n.asset_platform_id === selectedValue);
+    this.showFilter = true;
+    console.log(this.arrayFilterNfts);
+
   }
 }
